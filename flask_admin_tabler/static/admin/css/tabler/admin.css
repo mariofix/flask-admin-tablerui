@@ -1,0 +1,74 @@
+/* Flask-Admin Tabler theme custom styles */
+
+/* List view action buttons */
+td.list-buttons-column {
+    white-space: nowrap;
+    width: 1%;
+}
+
+a.icon,
+form.icon {
+    display: inline-block;
+    padding: 0 2px;
+}
+
+form.icon button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    color: inherit;
+}
+
+form.icon button:hover,
+a.icon:hover {
+    color: var(--tblr-primary);
+}
+
+/* Inline form fields */
+.inline-field-list .inline-field {
+    margin-bottom: 1rem;
+}
+
+/* Filter form table */
+table.filters {
+    width: 100%;
+}
+
+/* Model list checkbox column */
+.list-checkbox-column {
+    width: 1%;
+    white-space: nowrap;
+}
+
+/* Submit row spacing */
+.submit-row {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+/* Admin form fieldset */
+.admin-form fieldset {
+    border: none;
+    padding: 0;
+    margin: 0;
+}
+
+/* Select2 adjustments for Tabler */
+.select2-container .select2-selection--single {
+    height: calc(1.5em + 0.75rem + 2px);
+}
+
+.select2-container--default .select2-selection--single .select2-selection__rendered {
+    line-height: calc(1.5em + 0.75rem);
+}
+
+.select2-container--default .select2-selection--single .select2-selection__arrow {
+    height: calc(1.5em + 0.75rem);
+}
+
+/* Searchable table filter */
+tr.hidden-by-filter {
+    display: none;
+}
