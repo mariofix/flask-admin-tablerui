@@ -26,16 +26,17 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install flit
-          flit install --deps develop
+          pip install poetry
+          poetry install --all-extras
 
       - name: Run tests with coverage
         run: |
-          pip install pytest-cov coveralls
+          pip install pytest-cov coverage
           pytest --cov=flask_admin_tabler --cov-report=term-missing
 
-      - name: Upload coverage to Coveralls
-        if: matrix.python-version == '3.13'
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: coveralls
+
+      # - name: Upload coverage to Coveralls
+      #   if: matrix.python-version == '3.13'
+      #   env:
+      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      #   run: coveralls
