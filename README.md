@@ -28,7 +28,7 @@ theme.init_app(app)          # must come before Admin(app, ...)
 admin = Admin(app, name="My App", theme=theme)
 ```
 
-That's it — navigating to `/admin/` will now render the Tabler UI instead of
+That's it - navigating to `/admin/` will now render the Tabler UI instead of
 the default Bootswatch theme.
 
 A fully runnable example (including a SQLAlchemy model and sample data) is
@@ -45,17 +45,13 @@ python examples/quickstart.py
 `TablerTheme.init_app(app)` registers a Flask blueprint named
 `flask_admin_tabler` that:
 
-1. **Templates** — exposes `flask_admin_tabler/templates/tabler/` as a template
+1. **Templates** - exposes `flask_admin_tabler/templates/tabler/` as a template
    folder.  Because this blueprint is registered *before* Flask-Admin's admin
    blueprint, Flask resolves `admin/base.html` (and all other admin templates)
    from here first.
-2. **Static files** — serves the small amount of theme-specific CSS (e.g.
+2. **Static files** - serves the small amount of theme-specific CSS (e.g.
    `admin/css/tabler/admin.css`) at `/static/flask_admin_tabler/`.
 
-Tabler's core CSS and JS are loaded from the jsDelivr CDN — no local copies
+Tabler's core CSS and JS are loaded from the jsDelivr CDN - no local copies
 needed.
 
-## Requirements
-
-- Python ≥ 3.10
-- flask-admin ≥ 2.0.2

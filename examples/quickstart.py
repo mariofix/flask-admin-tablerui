@@ -14,8 +14,9 @@ Then open http://127.0.0.1:5000/admin/ in your browser.
 from flask import Flask
 from flask_admin import Admin
 from flask_admin.contrib.sqla import ModelView
-from flask_admin_tabler import TablerTheme
 from flask_sqlalchemy import SQLAlchemy
+
+from flask_admin_tabler import TablerTheme
 
 app = Flask(__name__)
 app.config["SECRET_KEY"] = "change-me"  # replace with a secure random value in production

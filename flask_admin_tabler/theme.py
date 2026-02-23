@@ -1,8 +1,7 @@
 import typing
 from dataclasses import dataclass
 
-from flask import Blueprint
-from flask import Flask
+from flask import Blueprint, Flask
 from flask_admin.theme import Theme
 
 

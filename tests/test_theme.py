@@ -1,6 +1,7 @@
 import pytest
 from flask import Flask
 from flask_admin import Admin
+
 from flask_admin_tabler import TablerTheme
 
 
@@ -41,9 +42,7 @@ def test_init_app_static_url(app):
     with app.test_request_context():
         from flask import url_for
 
-        url = url_for(
-            "flask_admin_tabler.static", filename="admin/css/tabler/admin.css"
-        )
+        url = url_for("flask_admin_tabler.static", filename="admin/css/tabler/admin.css")
         assert "flask_admin_tabler" in url
         assert "admin.css" in url
 

@@ -13,14 +13,6 @@ repos:
       - id: check-added-large-files
       - id: check-case-conflict
       - id: mixed-line-ending
-  - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: v0.15.2
-    hooks:
-      - id: ruff
-      - id: ruff-format
-  - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v6.0.0
-    hooks:
       - id: check-merge-conflict
       - id: debug-statements
       - id: fix-byte-order-marker
@@ -28,3 +20,17 @@ repos:
         exclude: ^flask_admin_tabler/static/
       - id: end-of-file-fixer
         exclude: ^flask_admin_tabler/static/
+  - repo: https://github.com/pycqa/isort
+    rev: 8.0.0
+    hooks:
+      - id: isort
+        args: ["--profile", "black", "--filter-files"]
+  - repo: https://github.com/psf/black
+    rev: 26.1.0
+    hooks:
+      - id: black
+  - repo: https://github.com/asottile/pyupgrade
+    rev: v3.21.2
+    hooks:
+      - id: pyupgrade
+        args: [--py310-plus]
