@@ -16,11 +16,17 @@ def test_theme_defaults():
     theme = TablerTheme()
     assert theme.folder == "tabler"
     assert theme.base_template == "admin/base.html"
+    assert theme.tabler_icons is True
 
 
 def test_theme_custom_base_template():
     theme = TablerTheme(base_template="my_base.html")
     assert theme.base_template == "my_base.html"
+
+
+def test_theme_tabler_icons_disabled():
+    theme = TablerTheme(tabler_icons=False)
+    assert theme.tabler_icons is False
 
 
 def test_init_app_registers_blueprint(app):
@@ -66,3 +72,25 @@ def test_admin_uses_tabler_base_template(app):
     assert b"cdn.jsdelivr.net/npm/@tabler" in response.data
     # Bootstrap CDN should NOT be present (we replaced it)
     assert b"bootstrap.min.css" not in response.data
+
+
+def test_admin_tabler_icons_css_loaded_by_default(app):
+    theme = TablerTheme()
+    theme.init_app(app)
+    Admin(app, name="Test Admin", theme=theme)
+
+    client = app.test_client()
+    response = client.get("/admin/")
+    assert response.status_code == 200
+    assert b"tabler-icons.min.css" in response.data
+
+
+def test_admin_tabler_icons_css_not_loaded_when_disabled(app):
+    theme = TablerTheme(tabler_icons=False)
+    theme.init_app(app)
+    Admin(app, name="Test Admin", theme=theme)
+
+    client = app.test_client()
+    response = client.get("/admin/")
+    assert response.status_code == 200
+    assert b"tabler-icons.min.css" not in response.data

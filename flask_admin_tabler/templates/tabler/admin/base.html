@@ -13,6 +13,9 @@
     {% endblock %}
     {% block head_css %}
         <link href="https://cdn.jsdelivr.net/npm/@tabler/core@1.4.0/dist/css/tabler.min.css" rel="stylesheet" {{ admin_csp_nonce_attribute }}>
+        {% if admin_view.admin.theme.tabler_icons %}
+        <link href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.31.0/dist/tabler-icons.min.css" rel="stylesheet" {{ admin_csp_nonce_attribute }}>
+        {% endif %}
         <link href="{{ url_for('flask_admin_tabler.static', filename='admin/css/tabler/admin.css') }}" rel="stylesheet" {{ admin_csp_nonce_attribute }}>
         {% if admin_view.extra_css %}
           {% for css_url in admin_view.extra_css %}

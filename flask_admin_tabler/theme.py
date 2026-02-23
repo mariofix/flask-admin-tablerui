@@ -35,6 +35,7 @@ class TablerTheme(Theme):
 
     folder: typing.Literal["tabler"] = "tabler"
     base_template: str = "admin/base.html"
+    tabler_icons: bool = True
 
     def init_app(self, app: Flask) -> None:
         """Register Tabler theme templates and static files with the Flask app.

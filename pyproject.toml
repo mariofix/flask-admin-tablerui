@@ -1,13 +1,20 @@
 [project]
 name = "flask-admin-tabler"
-version = "2026.2.0"
+version = "2026.2.2"
 description = "Tabler UI theme for Flask-Admin"
 readme = "README.md"
 license = { file = "LICENSE" }
 requires-python = ">=3.10,<4.0"
+keywords = [
+    "flask",
+    "flask-admin",
+    "tabler",
+    "admin-interface",
+    "theme",
+    "template",
+]
 dependencies = [
     "flask-admin>=2.0.2",
-    "pre-commit (>=4.5.1,<5.0.0)",
 ]
 classifiers = [
     "Development Status :: 4 - Beta",
@@ -25,12 +32,31 @@ classifiers = [
     "Topic :: Software Development :: Libraries :: Python Modules",
 ]
 
+[project.optional-dependencies]
+dev = [
+    "pre-commit",
+    "black",
+    "isort",
+]
+
 [project.urls]
 Source = "https://github.com/mariofix/flask-admin-tablerui"
 
+[tool.poetry]
+packages = [{include = "flask_admin_tabler"}]
+
 [build-system]
-requires = ["hatchling"]
-build-backend = "hatchling.build"
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.black]
+line-length = 119
+target-version = ['py310']
+
+[tool.isort]
+profile = "black"
+multi_line_output = 3
+py_version = 310
 
 
 [tool.pytest.ini_options]
