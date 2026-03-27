@@ -1,74 +1,90 @@
-/* Flask-Admin Tabler theme custom styles */
+/* Flask-Admin Tabler Theme — admin.css
+   Minimal overrides to make Flask-Admin widgets blend with Tabler 1.4.0.
+*/
 
-/* List view action buttons */
-td.list-buttons-column {
-    white-space: nowrap;
-    width: 1%;
-}
-
-a.icon,
-form.icon {
-    display: inline-block;
-    padding: 0 2px;
-}
-
-form.icon button {
-    background: none;
-    border: none;
-    cursor: pointer;
-    padding: 0;
-    color: inherit;
-}
-
-form.icon button:hover,
-a.icon:hover {
-    color: var(--tblr-primary);
-}
-
-/* Inline form fields */
-.inline-field-list .inline-field {
-    margin-bottom: 1rem;
-}
-
-/* Filter form table */
-table.filters {
-    width: 100%;
-}
-
-/* Model list checkbox column */
-.list-checkbox-column {
-    width: 1%;
-    white-space: nowrap;
-}
-
-/* Submit row spacing */
-.submit-row {
-    display: flex;
-    gap: 0.5rem;
-    flex-wrap: wrap;
-}
-
-/* Admin form fieldset */
+/* --- General tweaks --- */
 .admin-form fieldset {
-    border: none;
-    padding: 0;
-    margin: 0;
+  border: none;
+  padding: 0;
+  margin: 0;
 }
 
-/* Select2 adjustments for Tabler */
-.select2-container .select2-selection--single {
-    height: calc(1.5em + 0.75rem + 2px);
+.submit-row {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
 }
 
-.select2-container--default .select2-selection--single .select2-selection__rendered {
-    line-height: calc(1.5em + 0.75rem);
+/* --- List view --- */
+.model-list th.list-checkbox-column,
+.model-list td.list-checkbox-column {
+  width: 2rem;
+  text-align: center;
 }
 
-.select2-container--default .select2-selection--single .select2-selection__arrow {
-    height: calc(1.5em + 0.75rem);
+.list-buttons-column {
+  white-space: nowrap;
 }
 
-/* Searchable table filter */
-tr.hidden-by-filter {
-    display: none;
+.list-buttons-column form.icon {
+  display: inline;
+}
+
+.list-buttons-column form.icon button {
+  background: none;
+  border: none;
+  padding: 0 0.25rem;
+  cursor: pointer;
+  color: var(--tblr-secondary);
+}
+
+.list-buttons-column form.icon button:hover {
+  color: var(--tblr-danger);
+}
+
+.list-buttons-column a.icon {
+  padding: 0 0.25rem;
+  color: var(--tblr-secondary);
+}
+
+.list-buttons-column a.icon:hover {
+  color: var(--tblr-primary);
+}
+
+/* --- Inline fields --- */
+.inline-field .inline-field-list .inline-field {
+  margin-bottom: 1rem;
+}
+
+.inline-remove-field {
+  color: var(--tblr-danger);
+}
+
+/* --- Filters --- */
+.filters td {
+  padding: 0.25rem;
+}
+
+.field-filters .filter {
+  cursor: pointer;
+}
+
+/* --- Select2 integration --- */
+.select2-container {
+  min-width: 100%;
+}
+
+/* --- Nav tabs used in model views --- */
+.nav-tabs {
+  margin-bottom: 1rem;
+}
+
+/* --- Pagination alignment --- */
+.pagination {
+  margin-top: 1rem;
+}
+
+/* --- Flash messages --- */
+.alert-dismissible .btn-close {
+  padding: 0.75rem 1rem;
 }

@@ -4,7 +4,7 @@
 
 {% block head %}
     {{ super() }}
-    <link href="{{ url_for('flask_admin_tabler.static', filename='admin/css/tabler/rediscli.css') }}" rel="stylesheet">
+    <link href="{{ admin_static.url(filename='admin/css/bootstrap4/rediscli.css', v='1.0.0') }}" rel="stylesheet">
 {% endblock %}
 
 {% block body %}

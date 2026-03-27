@@ -78,20 +78,20 @@
 <ul class="pagination">
   {% if page > 0 %}
   <li class="page-item">
-      <a class="page-link" href="{{ generator(page - 1) }}">&lt;</a>
+      <a href="{{ generator(page - 1) }}">&lt;</a>
   </li>
   {% else %}
   <li class="page-item disabled">
-      <a class="page-link" href="{{ generator(0) }}">&lt;</a>
+      <a href="{{ generator(0) }}">&lt;</a>
   </li>
   {% endif %}
   {% if have_next %}
   <li class="page-item">
-      <a class="page-link" href="{{ generator(page + 1) }}">&gt;</a>
+      <a href="{{ generator(page + 1) }}">&gt;</a>
   </li>
   {% else %}
   <li class="page-item disabled">
-      <a class="page-link" href="{{ generator(page) }}">&gt;</a>
+      <a href="{{ generator(page) }}">&gt;</a>
   </li>
   {% endif %}
 </ul>
@@ -99,7 +99,7 @@
 
 {# ---------------------- Modal Window ------------------- #}
 {% macro add_modal_window(modal_window_id='fa_modal_window', modal_label_id='fa_modal_label') %}
-  <div class="modal fade" id="{{ modal_window_id }}" tabindex="-1" role="dialog" aria-labelledby="{{ modal_label_id }}">
+  <div class="modal fade" id="{{ modal_window_id }}" tabindex="-1" aria-labelledby="{{ modal_label_id }}" aria-hidden="true">
     <div class="modal-dialog modal-xl" role="document">
       <div class="modal-content">
       </div>
@@ -129,13 +129,11 @@
     {% if prepend or append %}
     <div class="input-group">
       {%- if prepend -%}
-      <span class="input-group-text">
-        {{ prepend }}
-      </span>
+      <span class="input-group-text">{{ prepend }}</span>
       {%- endif -%}
     {% endif %}
       {% if field.widget.input_type is defined and field.widget.input_type == 'checkbox' %}
-        {% set _class = kwargs.setdefault('class', '') %}
+        {% set _class = kwargs.setdefault('class', 'form-check-input') %}
       {% elif field.widget.input_type is defined and field.widget.input_type == 'file' %}
         {% set _class = kwargs.setdefault('class', 'form-control') %}
       {% else %}
@@ -144,13 +142,11 @@
       {%- if direct_error %} {% set _ = kwargs.update({'class': kwargs['class'] ~ ' is-invalid'}) %} {% endif -%}
       {{ field(**kwargs) | safe }}
       {%- if append -%}
-      <span class="input-group-text">
-        {{ append }}
-      </span>
+      <span class="input-group-text">{{ append }}</span>
       {%- endif -%}
       {% if direct_error %}
         <div class="invalid-feedback">
-          <ul class="form-text text-danger {% if field.widget.input_type == 'checkbox' %}mt-0{% endif %}">
+          <ul class="list-unstyled text-danger mb-0 {% if field.widget.input_type == 'checkbox' %}mt-0{% endif %}">
           {% for e in field.errors if e is string %}
             <li>{{ e }}</li>
           {% endfor %}
@@ -217,18 +213,18 @@
         {{ extra }}
         {% endif %}
         {% if cancel_url %}
-          <a href="{{ cancel_url }}" class="btn btn-danger" role="button" {% if is_modal %}data-bs-dismiss="modal"{% endif %}>{{ _gettext('Cancel') }}</a>
+          <a href="{{ cancel_url }}" class="btn btn-danger" role="button" data-bs-dismiss="modal">{{ _gettext('Cancel') }}</a>
         {% endif %}
   {% else %}
     <hr>
     <div class="mb-3">
-      <div class="submit-row">
+      <div class="col-md-offset-2 col-md-10 submit-row">
         <input type="submit" class="btn btn-primary" value="{{ _gettext('Save') }}" />
         {% if extra %}
         {{ extra }}
         {% endif %}
         {% if cancel_url is defined and cancel_url %}
-          <a href="{{ cancel_url }}" class="btn btn-danger" role="button" {% if is_modal %}data-bs-dismiss="modal"{% endif %}>{{ _gettext('Cancel') }}</a>
+          <a href="{{ cancel_url }}" class="btn btn-danger" role="button">{{ _gettext('Cancel') }}</a>
         {% endif %}
       </div>
     </div>
@@ -244,6 +240,7 @@
 
 {% macro form_css() %}
   <link href="{{ admin_static.url(filename='vendor/select2/select2.css', v='4.2.1') }}" rel="stylesheet">
+  <link href="{{ admin_static.url(filename='vendor/select2/select2-bootstrap4.css', v='1.4.6') }}" rel="stylesheet">
   <link href="{{ admin_static.url(filename='vendor/bootstrap-daterangepicker/daterangepicker-bs4.css', v='1.3.22') }}" rel="stylesheet">
   {% if config.FLASK_ADMIN_MAPS is defined and config.FLASK_ADMIN_MAPS %}
   <link href="{{ admin_static.url(filename='vendor/leaflet/leaflet.css', v='1.0.2') }}" rel="stylesheet">
