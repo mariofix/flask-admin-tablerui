@@ -1,6 +1,6 @@
 [project]
 name = "flask-admin-tabler"
-version = "2026.2.2"
+version = "0.1.1"
 description = "Tabler UI theme for Flask-Admin"
 readme = "README.md"
 license = { file = "LICENSE" }
