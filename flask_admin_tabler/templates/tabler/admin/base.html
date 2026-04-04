@@ -11,11 +11,18 @@
   <head>
     <script>
 window.addEventListener('error', function(e) {
-    if (e.filename && e.filename.includes('bs4_filters')) {
+    var suppress = [
+        'bs4_filters',
+        'bs4_modal',
+        'helpers',
+        'form',
+        'actions'
+    ];
+    if (e.filename && suppress.some(function(f) { return e.filename.includes(f); })) {
         e.preventDefault();
-        console.warn('Suppressed bs4_filters error:', e.message);
+        console.warn('Suppressed error in ' + e.filename + ':', e.message);
     }
-}, true);  // capture phase — fires before the script's own error handler
+}, true);
 </script>
     <title>{% block title %}{% if admin_view.category %}{{ admin_view.category }} - {% endif %}{{ admin_view.name }} - {{ admin_view.admin.name }}{% endblock %}</title>
     {% block head_meta %}
