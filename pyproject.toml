@@ -14,7 +14,7 @@ keywords = [
     "template",
 ]
 dependencies = [
-    "flask-admin>=2.0.2",
+    "flask-admin>=2.2.0",
 ]
 classifiers = [
     "Development Status :: 4 - Beta",
