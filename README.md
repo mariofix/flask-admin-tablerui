@@ -40,18 +40,6 @@ python examples/quickstart.py
 # open http://127.0.0.1:5000/admin/
 ```
 
-## How it works
+## Versioning
 
-`TablerTheme.init_app(app)` registers a Flask blueprint named
-`flask_admin_tabler` that:
-
-1. **Templates** - exposes `flask_admin_tabler/templates/tabler/` as a template
-   folder.  Because this blueprint is registered *before* Flask-Admin's admin
-   blueprint, Flask resolves `admin/base.html` (and all other admin templates)
-   from here first.
-2. **Static files** - serves the small amount of theme-specific CSS (e.g.
-   `admin/css/tabler/admin.css`) at `/static/flask_admin_tabler/`.
-
-Tabler's core CSS and JS are loaded from the jsDelivr CDN - no local copies
-needed.
-
+Releases/tags are matched to each tabler version.

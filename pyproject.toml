@@ -1,6 +1,6 @@
 [project]
 name = "flask-admin-tabler"
-version = "0.1.1"
+version = "1.7.1"
 description = "Tabler UI theme for Flask-Admin"
 readme = "README.md"
 license = { file = "LICENSE" }
@@ -13,37 +13,26 @@ keywords = [
     "theme",
     "template",
 ]
-dependencies = [
-    "flask-admin>=2.2.1",
-]
+dependencies = ["flask-admin>=2.2.1"]
 classifiers = [
     "Development Status :: 4 - Beta",
     "Environment :: Web Environment",
     "Intended Audience :: Developers",
-    "License :: OSI Approved :: BSD License",
+    "License :: OSI Approved :: MIT License",
     "Operating System :: OS Independent",
     "Programming Language :: Python",
     "Programming Language :: Python :: 3",
-    "Programming Language :: Python :: 3.10",
-    "Programming Language :: Python :: 3.11",
-    "Programming Language :: Python :: 3.12",
-    "Programming Language :: Python :: 3.13",
-    "Topic :: Internet :: WWW/HTTP :: Dynamic Content",
     "Topic :: Software Development :: Libraries :: Python Modules",
 ]
 
 [project.optional-dependencies]
-dev = [
-    "pre-commit",
-    "black",
-    "isort",
-]
+dev = ["pre-commit", "black", "isort"]
 
 [project.urls]
-Source = "https://github.com/mariofix/flask-admin-tablerui"
+Github = "https://github.com/mariofix/flask-admin-tablerui"
 
 [tool.poetry]
-packages = [{include = "flask_admin_tabler"}]
+packages = [{ include = "flask_admin_tabler" }]
 
 [build-system]
 requires = ["poetry-core>=2.0.0,<3.0.0"]
@@ -71,12 +60,12 @@ target-version = "py310"
 
 [tool.ruff.lint]
 select = [
-    "B",   # flake8-bugbear
-    "E",   # pycodestyle error
-    "F",   # pyflakes
-    "I",   # isort
-    "UP",  # pyupgrade
-    "W",   # pycodestyle warning
+    "B",  # flake8-bugbear
+    "E",  # pycodestyle error
+    "F",  # pyflakes
+    "I",  # isort
+    "UP", # pyupgrade
+    "W",  # pycodestyle warning
 ]
 
 [tool.ruff.lint.isort]
