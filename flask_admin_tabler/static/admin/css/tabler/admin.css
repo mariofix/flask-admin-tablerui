@@ -1,5 +1,5 @@
 /* Flask-Admin Tabler Theme — admin.css
-   Minimal overrides to make Flask-Admin widgets blend with Tabler 1.4.0.
+   Minimal overrides to make Flask-Admin widgets blend with Tabler 1.7.1.
 */
 
 /* --- General tweaks --- */
@@ -35,7 +35,7 @@
   border: none;
   padding: 0 0.25rem;
   cursor: pointer;
-  color: var(--tblr-secondary);
+  color: var(--tblr-secondary-color, var(--tblr-secondary));
 }
 
 .list-buttons-column form.icon button:hover {
@@ -44,7 +44,7 @@
 
 .list-buttons-column a.icon {
   padding: 0 0.25rem;
-  color: var(--tblr-secondary);
+  color: var(--tblr-secondary-color, var(--tblr-secondary));
 }
 
 .list-buttons-column a.icon:hover {

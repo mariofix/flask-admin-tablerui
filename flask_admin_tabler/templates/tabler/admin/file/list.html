@@ -177,11 +177,11 @@
             {% endif %}
           </td>
           {% if admin_view.is_column_visible('size') %}
-          <td class="text-muted">{{ size|filesizeformat }}</td>
+          <td class="text-secondary">{{ size|filesizeformat }}</td>
           {% endif %}
           {% endif %}
           {% if admin_view.is_column_visible('date') %}
-          <td class="text-muted">{{ timestamp_format(date) }}</td>
+          <td class="text-secondary">{{ timestamp_format(date) }}</td>
           {% endif %}
           {% endblock %}
         </tr>

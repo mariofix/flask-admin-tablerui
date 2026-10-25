@@ -153,9 +153,9 @@
           </ul>
         </div>
       {% elif field.description %}
-        <small class="form-hint {% if field.widget.input_type == 'checkbox' %}mt-0{% endif %}">
+        <div class="form-text {% if field.widget.input_type == 'checkbox' %}mt-0{% endif %}">
             {{ field.description|safe }}
-        </small>
+        </div>
       {% endif %}
     {% if prepend or append %}
     </div>

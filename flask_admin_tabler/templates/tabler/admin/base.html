@@ -3,11 +3,13 @@
 {% set _t = admin_view.admin.theme %}
 <!DOCTYPE html>
 <html lang="en"
-  data-bs-theme="{{ _t.theme }}"
+  data-bs-theme="{{ _t.html_theme }}"
   data-bs-theme-primary="{{ _t.theme_primary }}"
   data-bs-theme-base="{{ _t.theme_base }}"
   data-bs-theme-font="{{ _t.theme_font }}"
-  data-bs-theme-radius="{{ _t.theme_radius }}">
+  data-bs-theme-radius="{{ _t.theme_radius }}"
+  data-bs-layout="{{ _t.theme_layout }}"
+  {% if _t.is_sticky_navigation %}data-bs-navbar="sticky"{% endif %}>
   <head>
     <script>
 window.addEventListener('error', function(e) {
@@ -48,14 +50,17 @@ window.addEventListener('error', function(e) {
     {% block head_tail %}
     {% endblock %}
   </head>
-  <body class="layout-fluid">
+  <body class="{{ _t.body_class }}">
     {# Apply stored dark/light preference immediately to prevent flash.
-       Only dark/light is user-switchable; other theme settings are server-side. #}
+       Uses flask-admin specific key 'tabler-admin-theme'. #}
     <script {{ admin_csp_nonce_attribute }}>
       (function () {
         var stored = localStorage.getItem('tabler-admin-theme');
         if (stored === 'dark' || stored === 'light') {
           document.documentElement.setAttribute('data-bs-theme', stored);
+        } else if ('{{ _t.html_theme }}' === 'auto') {
+          var prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+          document.documentElement.setAttribute('data-bs-theme', prefersDark ? 'dark' : 'light');
         }
       })();
     </script>
@@ -64,7 +69,7 @@ window.addEventListener('error', function(e) {
       {% block page_body %}
 
       <!-- Vertical sidebar -->
-      <aside class="navbar navbar-vertical navbar-expand-lg" data-bs-theme="dark">
+      <aside class="navbar navbar-vertical navbar-expand-lg" {% if _t.navbar_theme != 'default' %}data-bs-theme="{{ _t.navbar_theme }}"{% endif %}>
         <div class="container-fluid">
           {% block brand %}
           <a class="navbar-brand navbar-brand-autodark" href="{{ admin_view.admin.url }}">
@@ -116,7 +121,7 @@ window.addEventListener('error', function(e) {
       <div class="page-wrapper">
         <!-- Page header -->
         <div class="page-header d-print-none">
-          <div class="container-xl">
+          <div class="{{ _t.container_class }}">
             <div class="row g-2 align-items-center">
               <div class="col">
                 {% block page_title %}
@@ -132,7 +137,7 @@ window.addEventListener('error', function(e) {
 
         <!-- Page body -->
         <main id="content" class="page-body">
-          <div class="container-xl">
+          <div class="{{ _t.container_class }}">
             {% block messages %}
                 {{ layout.messages() }}
             {% endblock %}

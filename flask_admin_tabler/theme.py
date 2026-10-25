@@ -46,7 +46,7 @@ class TablerTheme(Theme):
 
     # Tabler UI theme settings — map directly to data-bs-* HTML attributes.
     # Defaults match Tabler's own defaults so existing deployments are unaffected.
-    theme: t.Literal["light", "dark"] = "light"
+    theme: t.Literal["light", "dark", "nav-dark", "nav-color", "auto"] = "light"
     theme_primary: t.Literal[
         "blue",
         "azure",
@@ -55,37 +55,78 @@ class TablerTheme(Theme):
         "pink",
         "red",
         "orange",
+        "yellow",
         "lime",
         "green",
         "teal",
         "cyan",
     ] = "blue"
-    theme_base: t.Literal["gray", "neutral", "slate", "zinc", "stone"] = "gray"
+    theme_base: t.Literal["gray", "neutral", "slate", "zinc", "stone", "mist"] = "gray"
     theme_font: t.Literal["sans-serif", "serif", "monospace", "comic"] = "sans-serif"
     theme_radius: t.Literal["0", "0.5", "1", "1.5", "2"] = "1"
-    layout: t.Literal["vertical", "fluid", "condensed"] = "condensed"
+    theme_layout: t.Literal["fluid", "boxed"] = "fluid"
+    theme_navigation: t.Literal["condensed", "sidebar", "detached", "sticky"] = "condensed"
 
     @property
     def is_sidebar_layout(self) -> bool:
-        return self.layout == "vertical"
+        return self.theme_navigation == "sidebar"
 
     @property
     def is_fluid_layout(self) -> bool:
-        return self.layout == "fluid"
+        return self.theme_layout == "fluid"
+
+    @property
+    def is_boxed_layout(self) -> bool:
+        return self.theme_layout == "boxed"
 
     @property
     def is_condensed_layout(self) -> bool:
-        return self.layout == "condensed"
+        return self.theme_navigation == "condensed"
+
+    @property
+    def is_detached_navigation(self) -> bool:
+        return self.theme_navigation == "detached"
+
+    @property
+    def is_sticky_navigation(self) -> bool:
+        return self.theme_navigation == "sticky"
 
     @property
     def body_class(self) -> str:
-        return "layout-fluid" if self.is_fluid_layout else ""
+        classes = []
+        if self.is_fluid_layout:
+            classes.append("layout-fluid")
+        elif self.is_boxed_layout:
+            classes.append("layout-boxed")
+        return " ".join(classes)
+
+    @property
+    def container_class(self) -> str:
+        return "container-fluid" if self.is_fluid_layout else "container-xl"
+
+    @property
+    def html_theme(self) -> str:
+        """Resolve HTML data-bs-theme value."""
+        if self.theme in ("nav-dark", "nav-color"):
+            return "light"
+        return self.theme
+
+    @property
+    def navbar_theme(self) -> str:
+        """Resolve navbar theme attribute."""
+        if self.theme == "nav-dark":
+            return "dark"
+        if self.theme == "nav-color":
+            return "primary"
+        if self.theme == "dark":
+            return "dark"
+        return "default"
 
     @staticmethod
     def bool_formatter(view: t.Any, value: t.Any, name: str) -> str:
         """Format boolean values using Tabler icons instead of FontAwesome."""
         icon = "circle-check" if value else "circle-minus"
-        color = "text-success" if value else "text-muted"
+        color = "text-success" if value else "text-secondary"
         label = f"{name}: {'true' if value else 'false'}"
         return Markup(f'<span class="ti ti-{icon} {color}" title="{label}"></span>')
 
