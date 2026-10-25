@@ -9,7 +9,7 @@ from markupsafe import Markup
 @dataclass
 class TablerTheme(Theme):
     """
-    Tabler 1.4.0 theme for Flask-Admin.
+    Tabler 1.7.1 theme for Flask-Admin.
 
     Ships Tabler UI assets locally (CSS, JS, icon webfonts) so no CDN is
     required.  All Flask-Admin templates (base, layout, model views, file
@@ -46,11 +46,40 @@ class TablerTheme(Theme):
 
     # Tabler UI theme settings — map directly to data-bs-* HTML attributes.
     # Defaults match Tabler's own defaults so existing deployments are unaffected.
-    theme: str = "light"  # "light" | "dark"
-    theme_primary: str = "blue"  # "blue" | "lime" | "azure" | "indigo" | …
-    theme_base: str = "gray"  # "gray" | "neutral" | "slate" | "zinc" | "stone"
-    theme_font: str = "sans-serif"  # "sans-serif" | "serif" | "monospace" | "comic"
-    theme_radius: str = "1"  # "0" | "0.5" | "1" | "1.5" | "2"
+    theme: t.Literal["light", "dark"] = "light"
+    theme_primary: t.Literal[
+        "blue",
+        "azure",
+        "indigo",
+        "purple",
+        "pink",
+        "red",
+        "orange",
+        "lime",
+        "green",
+        "teal",
+        "cyan",
+    ] = "blue"
+    theme_base: t.Literal["gray", "neutral", "slate", "zinc", "stone"] = "gray"
+    theme_font: t.Literal["sans-serif", "serif", "monospace", "comic"] = "sans-serif"
+    theme_radius: t.Literal["0", "0.5", "1", "1.5", "2"] = "1"
+    layout: t.Literal["vertical", "fluid", "condensed"] = "condensed"
+
+    @property
+    def is_sidebar_layout(self) -> bool:
+        return self.layout == "vertical"
+
+    @property
+    def is_fluid_layout(self) -> bool:
+        return self.layout == "fluid"
+
+    @property
+    def is_condensed_layout(self) -> bool:
+        return self.layout == "condensed"
+
+    @property
+    def body_class(self) -> str:
+        return "layout-fluid" if self.is_fluid_layout else ""
 
     @staticmethod
     def bool_formatter(view: t.Any, value: t.Any, name: str) -> str:

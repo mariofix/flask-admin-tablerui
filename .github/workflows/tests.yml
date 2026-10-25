@@ -13,7 +13,7 @@ jobs:
       contents: read
     strategy:
       matrix:
-        python-version: ["3.10", "3.11", "3.12", "3.13"]
+        python-version: ["3.11", "3.12", "3.13", "3.14", "3.15"]
 
     steps:
       - uses: actions/checkout@v7
@@ -32,10 +32,3 @@ jobs:
         run: |
           pip install pytest-cov coverage
           pytest --cov=flask_admin_tabler --cov-report=term-missing
-
-
-      # - name: Upload coverage to Coveralls
-      #   if: matrix.python-version == '3.13'
-      #   env:
-      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      #   run: coveralls

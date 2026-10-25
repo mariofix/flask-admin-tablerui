@@ -12,6 +12,7 @@ __pycache__/
 build/
 develop-eggs/
 dist/
+!flask_admin_tabler/**/dist/
 downloads/
 eggs/
 .eggs/
@@ -26,6 +27,7 @@ share/python-wheels/
 .installed.cfg
 *.egg
 MANIFEST
+node_modules/
 
 # PyInstaller
 #  Usually these files are written by a python script from a template
