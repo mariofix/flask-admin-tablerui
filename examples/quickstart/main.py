@@ -1,12 +1,11 @@
 """
-Quickstart example – flask-admin-tabler
+Quickstart example - flask-admin-tabler
 =======================================
 
 Run this file directly to launch a minimal Flask-Admin application that uses
 the Tabler UI theme::
 
-    pip install flask-admin-tabler flask-sqlalchemy
-    python examples/quickstart.py
+    uv run main.py
 
 Then open http://127.0.0.1:5000/admin/ in your browser.
 """

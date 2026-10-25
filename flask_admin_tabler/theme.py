@@ -11,18 +11,6 @@ class TablerTheme(Theme):
     """
     Tabler 1.7.1 theme for Flask-Admin.
 
-    Ships Tabler UI assets locally (CSS, JS, icon webfonts) so no CDN is
-    required.  All Flask-Admin templates (base, layout, model views, file
-    views, etc.) have been copied from the upstream bootstrap4 bundle and
-    rewritten for Tabler / Bootstrap 5.  They live under
-    ``flask_admin_tabler/templates/tabler/admin/``.
-
-    ``Theme.folder`` is set to ``"tabler"`` so that Flask-Admin's admin
-    blueprint looks inside ``templates/tabler/`` for every template it
-    renders (index.html, model/list.html, …).  Registering our own package
-    blueprint **before** Flask-Admin's admin blueprint further guarantees
-    that our Tabler templates win when two blueprints ship the same path.
-
     Usage::
 
         from flask_admin_tabler import TablerTheme

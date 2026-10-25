@@ -1,0 +1,10 @@
+[project]
+name = "basic-example"
+version = "0.1.0"
+description = "Basic Example for Flask-Admin-Tabler"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = ["flask-admin-tabler"]
+
+[tool.uv.sources]
+flask-admin-tabler = { path = "../../", editable = true }
