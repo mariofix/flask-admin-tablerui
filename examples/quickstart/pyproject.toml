@@ -4,7 +4,10 @@ version = "0.1.0"
 description = "Basic Example for Flask-Admin-Tabler"
 readme = "README.md"
 requires-python = ">=3.11"
-dependencies = ["flask-admin-tabler"]
+dependencies = [
+    "flask-admin-tabler",
+    "flask-admin[sqlalchemy-with-utils,export]",
+]
 
 [tool.uv.sources]
 flask-admin-tabler = { path = "../../", editable = true }

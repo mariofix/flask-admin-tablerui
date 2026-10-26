@@ -1,3 +1,7 @@
-{% macro url() -%}
-    {{ get_url('{admin_endpoint}.static'.format(admin_endpoint=admin_view.admin.endpoint), *varargs, **kwargs) }}
+{% macro url(filename) -%}
+  {% if filename.startswith('tabler/') or filename.startswith('admin/css/tabler/') or filename.startswith('admin/js/tabler_') %}
+    {{ url_for('flask_admin_tabler.static', filename=filename, **kwargs) }}
+  {% else %}
+    {{ get_url('{admin_endpoint}.static'.format(admin_endpoint=admin_view.admin.endpoint), filename=filename, **kwargs) }}
+  {% endif %}
 {%- endmacro %}
