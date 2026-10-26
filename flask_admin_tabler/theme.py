@@ -3,7 +3,7 @@ from dataclasses import dataclass
 
 from flask import Blueprint, Flask
 from flask_admin.theme import Theme
-from markupsafe import Markup
+from markupsafe import Markup, escape
 
 
 @dataclass
@@ -116,7 +116,7 @@ class TablerTheme(Theme):
         icon = "circle-check" if value else "circle-minus"
         color = "text-success" if value else "text-secondary"
         label = f"{name}: {'true' if value else 'false'}"
-        return Markup(f'<span class="ti ti-{icon} {color}" title="{label}"></span>')
+        return Markup(f'<span class="ti ti-{icon} {color}" title="{escape(label)}"></span>')
 
     def init_app(self, app: Flask) -> None:
         """Register Tabler theme templates and static files with the Flask app.

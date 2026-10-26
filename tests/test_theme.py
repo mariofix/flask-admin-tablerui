@@ -2,7 +2,8 @@ import pytest
 from flask import Flask
 from flask_admin import Admin
 
-from flask_admin_tabler import TablerTheme
+from flask_admin_tabler import JsonColumnsMixin, TablerTheme
+from flask_admin_tabler.json_widget import JsonTextAreaWidget, json_detail_formatter
 
 
 @pytest.fixture
@@ -100,6 +101,9 @@ def test_bool_formatter():
     assert "ti-circle-minus" in str(rendered_false)
     assert "text-secondary" in str(rendered_false)
 
+    rendered_untrusted_name = TablerTheme.bool_formatter(None, True, 'name"><script>')
+    assert 'title="name&#34;&gt;&lt;script&gt;: true"' in str(rendered_untrusted_name)
+
 
 def test_init_app_registers_blueprint(app):
     theme = TablerTheme()
@@ -153,3 +157,58 @@ def test_admin_tabler_icons_css_loaded(app):
     response = client.get("/admin/")
     assert response.status_code == 200
     assert b"tabler-icons.min.css" in response.data
+
+
+@pytest.mark.parametrize(
+    ("theme", "expected_menu_id"),
+    [
+        (TablerTheme(), b"navbar-menu"),
+        (TablerTheme(theme_layout="boxed"), b"navbar-menu"),
+        (TablerTheme(theme_navigation="detached"), b"navbar-menu-secondary"),
+        (
+            TablerTheme(theme_layout="boxed", theme_navigation="sticky"),
+            b"navbar-menu-secondary",
+        ),
+    ],
+)
+def test_admin_renders_navigation_once(app, theme, expected_menu_id):
+    theme.init_app(app)
+    Admin(app, name="Test Admin", theme=theme)
+
+    response = app.test_client().get("/admin/")
+
+    assert response.status_code == 200
+    assert response.data.count(b">Home</span>") == 1
+    assert response.data.count(b'id="navbar-menu"') + response.data.count(b'id="navbar-menu-secondary"') == 1
+    assert expected_menu_id in response.data
+    assert b'data-tabler-layout="' + theme.theme_layout.encode() + b'"' in response.data
+
+
+def test_json_columns_use_custom_widget_without_mutating_class_args():
+    class CustomView(JsonColumnsMixin):
+        json_columns = ["payload"]
+        form_args = {"payload": {"description": "JSON data"}}
+        form_widget_args = {"payload": {"rows": 8}}
+
+        def __init__(self):
+            super().__init__()
+
+    view = CustomView()
+
+    assert isinstance(view.form_args["payload"]["widget"], JsonTextAreaWidget)
+    assert view.form_args["payload"]["description"] == "JSON data"
+    assert view.form_widget_args == {"payload": {"rows": 8}}
+    assert "widget" not in CustomView.form_args["payload"]
+
+
+def test_json_detail_formatter_uses_registered_static_route(app):
+    theme = TablerTheme()
+    theme.init_app(app)
+
+    class Model:
+        payload = {"key": "value"}
+
+    with app.test_request_context():
+        result = json_detail_formatter(None, None, Model(), "payload")
+
+    assert "/static/flask_admin_tabler/vendor/highlightjs/highlight.min.js" in str(result)
