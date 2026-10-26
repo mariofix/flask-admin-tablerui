@@ -210,7 +210,8 @@ _ONCE_SCRIPT = Markup("""<script>
 
 def _json_init_script() -> Markup:
     highlight_path = url_for("flask_admin_tabler.static", filename="vendor/highlightjs")
-    return _ONCE_SCRIPT.replace("%%HLJS%%", highlight_path)
+    js_path = json.dumps(highlight_path)[1:-1].replace("'", "\\u0027").replace("<", "\\u003c")
+    return Markup(str(_ONCE_SCRIPT).replace("%%HLJS%%", js_path))
 
 
 # ---------------------------------------------------------------------------
