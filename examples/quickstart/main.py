@@ -41,7 +41,7 @@ theme.init_app(app)
 
 # 3. Pass the theme to Admin
 admin = Admin(app, name="Quickstart", theme=theme)
-admin.add_view(ModelView(User, db.session))
+admin.add_view(ModelView(User, db))
 
 if __name__ == "__main__":
     with app.app_context():
