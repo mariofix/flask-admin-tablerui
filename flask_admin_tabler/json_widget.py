@@ -19,10 +19,9 @@ The mixin automatically:
 import json
 import typing as t
 
+from flask import url_for
 from markupsafe import Markup, escape
 from wtforms.widgets import TextArea
-
-_HLJS = "/static/flask_admin_tabler/vendor/highlightjs"
 
 # ---------------------------------------------------------------------------
 # One-time per-page initialisation block.
@@ -30,8 +29,7 @@ _HLJS = "/static/flask_admin_tabler/vendor/highlightjs"
 # fields or formatters inject this snippet on the same page.
 # All DOM construction uses createElement/appendChild — no innerHTML.
 # ---------------------------------------------------------------------------
-_ONCE_SCRIPT = Markup(
-    """<script>
+_ONCE_SCRIPT = Markup("""<script>
 (function () {
   if (window.__jsonToolsInit) return;
   window.__jsonToolsInit = true;
@@ -207,8 +205,13 @@ _ONCE_SCRIPT = Markup(
   };
   document.head.appendChild(hljsEl);
 })();
-</script>""".replace("%%HLJS%%", _HLJS)
-)
+</script>""")
+
+
+def _json_init_script() -> Markup:
+    highlight_path = url_for("flask_admin_tabler.static", filename="vendor/highlightjs")
+    js_path = json.dumps(highlight_path)[1:-1].replace("'", "\\u0027").replace("<", "\\u003c")
+    return Markup(str(_ONCE_SCRIPT).replace("%%HLJS%%", js_path))
 
 
 # ---------------------------------------------------------------------------
@@ -230,7 +233,7 @@ class JsonTextAreaWidget:
             f' data-json-target="{escape(field.id)}">'
             f'<i class="ti ti-eye me-1"></i>Preview JSON</button>'
         )
-        return textarea + btn + _ONCE_SCRIPT
+        return textarea + btn + _json_init_script()
 
 
 # ---------------------------------------------------------------------------
@@ -292,7 +295,7 @@ def json_detail_formatter(view: t.Any, context: t.Any, model: t.Any, name: str) 
         formatted = json.dumps(parsed, indent=2, ensure_ascii=False)
         return (
             Markup(f'<pre class="json-viewer"><code class="language-json">{escape(formatted)}</code></pre>')
-            + _ONCE_SCRIPT
+            + _json_init_script()
         )
     return Markup(escape(str(value)))
 
@@ -322,17 +325,19 @@ class JsonColumnsMixin:
             # Copy existing dicts — never mutate shared class-level objects.
             cf = dict(getattr(self, "column_formatters", {}) or {})
             cfd = dict(getattr(self, "column_formatters_detail", {}) or {})
-            fwa = dict(getattr(self, "form_widget_args", {}) or {})
+            fa = dict(getattr(self, "form_args", {}) or {})
 
             for col in self.json_columns:
                 cf.setdefault(col, json_list_formatter)
                 cfd.setdefault(col, json_detail_formatter)
-                fwa.setdefault(col, {"widget": JsonTextAreaWidget()})
+                field_args = dict(fa.get(col, {}) or {})
+                field_args.setdefault("widget", JsonTextAreaWidget())
+                fa[col] = field_args
 
             # Set as instance attributes so Flask-Admin's __init__ picks them up.
             self.column_formatters = cf
             self.column_formatters_detail = cfd
-            self.form_widget_args = fwa
+            self.form_args = fa
 
         super().__init__(*args, **kwargs)
 

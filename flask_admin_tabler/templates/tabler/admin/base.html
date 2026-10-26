@@ -69,7 +69,7 @@
   {% endblock %}
 </head>
 
-<body{% if _t.body_class %} class="{{ _t.body_class }}"{% endif %} data-tabler-layout="{{ _t.layout }}">
+<body{% if _t.body_class %} class="{{ _t.body_class }}"{% endif %} data-tabler-layout="{{ _t.theme_layout }}">
   {# Apply stored dark/light preference immediately to prevent flash.
      Uses flask-admin specific key 'tabler-admin-theme'. #}
   <script {{ admin_csp_nonce_attribute }}>
@@ -107,7 +107,7 @@
     {% else %}
     <header class="navbar navbar-expand-md d-print-none tabler-admin-header">
       <div class="{{ _t.container_class }}">
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar-menu" aria-controls="navbar-menu" aria-expanded="false" aria-label="Toggle primary navigation">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#{{ 'navbar-menu' if _t.is_condensed_layout else 'navbar-menu-secondary' }}" aria-controls="{{ 'navbar-menu' if _t.is_condensed_layout else 'navbar-menu-secondary' }}" aria-expanded="false" aria-label="Toggle primary navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
         {{ brand_markup }}
@@ -126,9 +126,9 @@
         {% endif %}
       </div>
     </header>
-    {% if _t.is_fluid_layout %}
+    {% if not _t.is_condensed_layout %}
     <div class="navbar-expand-md tabler-admin-navbar-secondary">
-      <div class="collapse navbar-collapse" id="navbar-menu">
+      <div class="collapse navbar-collapse" id="navbar-menu-secondary">
         <div class="navbar">
           <div class="{{ _t.container_class }}">
             <div class="row flex-column flex-md-row flex-fill align-items-center">

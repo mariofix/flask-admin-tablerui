@@ -133,7 +133,8 @@
                     {% endif %}
                     <button type="submit" class="btn btn-sm btn-ghost-danger"
                             title="{{ _gettext('Delete Directory') }}"
-                            onclick="return confirm('{{ _gettext('Are you sure you want to delete \\\'%(name)s\\\' recursively?', name=name) }}')">
+                            data-confirm="{{ _gettext('Are you sure you want to delete \\\'%(name)s\\\' recursively?', name=name) }}"
+                            onclick="return confirm(this.dataset.confirm)">
                       <i class="ti ti-trash"></i>
                     </button>
                   </form>
@@ -146,7 +147,8 @@
                   {% endif %}
                   <button type="submit" class="btn btn-sm btn-ghost-danger"
                           title="{{ _gettext('Delete File') }}"
-                          onclick="return confirm('{{ _gettext('Are you sure you want to delete \\\'%(name)s\\\'?', name=name) }}')">
+                          data-confirm="{{ _gettext('Are you sure you want to delete \\\'%(name)s\\\'?', name=name) }}"
+                          onclick="return confirm(this.dataset.confirm)">
                     <i class="ti ti-trash"></i>
                   </button>
                 </form>

@@ -108,7 +108,7 @@ const AdminFilters = function (element, filtersElement, filterGroups, activeFilt
         const removeBtn = document.createElement('a');
         removeBtn.href = '#';
         removeBtn.className = 'btn btn-secondary btn-sm remove-filter';
-        removeBtn.innerHTML = '<span>&times;</span>&nbsp;' + name;
+        removeBtn.appendChild(document.createTextNode('\u00d7 ' + name));
         removeBtn.addEventListener('click', function (e) {
             e.preventDefault();
             removeFilter(row);
