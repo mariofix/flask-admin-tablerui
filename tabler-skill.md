@@ -19,6 +19,11 @@ Before writing markup for a component, fetch its `.md` page and copy the example
 
 ## Install
 
+All installation files already pulled and available as local copies from this repo.
+
+he local files where installed using `npm install @tabler/core` then copied to the respectice static folder, original node_modules folder was not staged to the repo and was then deleted.
+Original instructions left for clarity and traceability
+
 Plain HTML, from the CDN:
 
 ```html
