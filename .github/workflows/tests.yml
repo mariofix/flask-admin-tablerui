@@ -3,7 +3,7 @@ name: Tests & Coverage
 on:
   push:
     branches:
-      - sandbox
+      - main
   pull_request:
 
 jobs:

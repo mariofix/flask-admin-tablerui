@@ -9,7 +9,7 @@ from markupsafe import Markup, escape
 @dataclass
 class TablerTheme(Theme):
     """
-    Tabler 1.7.1 theme for Flask-Admin.
+    Tabler 1.7.3 theme for Flask-Admin.
 
     Usage::
 
